@@ -1,0 +1,113 @@
+﻿@model IEnumerable<CRUD_Alumnos.Models.AlumnoCE>
+
+@{
+    ViewBag.Title = "Listado Alumnos"; // nombre de la pagina  en pestaña
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ <style>
+     .Tamaño{
+         height:50px;
+         width:50px;
+     }
+ </style>
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Agregar")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Edad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sexo)
+        </th>
+        <th>
+            Fecha de Alta
+        </th>
+        <th> Ciudad</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                
+                
+                @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Apellidos)
+            </td>*@
+            <td>
+                
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexo)
+            </td>
+            <td>
+                @item.FechaRegistro.ToShortDateString()
+
+                @*@Html.DisplayFor(modelItem => item.FechaRegistro)
+                    no se puede aplicar el toshordatestring xq esta en una expresion lamda
+                *@
+            </td>
+            <td>
+                @item.NombreCiudad                
+                @*@CRUD_Alumnos.Controllers.AlumnoController.NombreCiudad(item.CodCiudad)*@
+                @*@Html.Action("NombreCiudades").ToString();*@
+                @*forma rapida de devolver el nombre de la ciudad de la persona dependiendo del CodCiudad*@
+
+
+            </td>
+            <td>
+                <a href="@Url.Action("Editar", new { id = item.Id })" class="action-link">
+                    <img src="~/editar2.png"  class="Tamaño" alt="Editar" />
+                </a>
+                
+                <a href="@Url.Action("DetalleAlumno", new { id = item.Id })" class="action-link">
+                    <img src="~/Info.png" class="Tamaño" alt="Detalle"/>
+                </a>
+                
+                <a href="@Url.Action("EliminarAlumno", new { id = item.Id })" class="action-link aElimina">
+                    <img src="~/eliminar.png" class="Tamaño" alt="Eliminar"/>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $(".aElimina").click(function (e) {
+                e.preventDefault();
+                var url = $(this).attr("href");
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Esta acción no se puede deshacer.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    </script>
+}
+

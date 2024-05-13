@@ -1,0 +1,8 @@
+﻿.fondo {
+    background-image: url("../../escuela.jpg");
+    background-size: contain; /* Ajusta la imagen al contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen */
+    height: 100vh; /* Establece el tamaño del cuerpo al 100% del alto de la ventana */
+    
+}
